@@ -25,14 +25,23 @@ def load_dataset():
         return pd.read_csv(file_path)
     return None
 
-def scatterplot(df,feature):
-    pass
+def scatterplot(df,feature1,feature2):
+    plt.figure()
+    sns.scatterplot(x=df[feature1],y=df[feature2])
+    plt.title(f"Scatter Plot of {feature1} vs {feature2}")
+    plt.show()
 
-def lineplot(df,feature):
-    pass
+def lineplot(df,feature1,feature2):
+    plt.figure()
+    sns.lineplot(x=df[feature1],y=df[feature2])
+    plt.title(f"Line Plot of {feature1} vs {feature2}")
+    plt.show()
 
 def boxplot(df,feature):
-    pass
+    plt.figure()
+    sns.boxplot(y=df[feature])
+    plt.title(f"Boxplot of {feature}")
+    plt.show()
 
 def histogram(df,feature):
     plt.figure()
@@ -53,6 +62,7 @@ def main():
         screen.fill(WHITE)
         y_offset=50
         draw_text("Press 'L' to load dataset",50,y_offset)
+        y_offset+=50
 
         if df is not None:
             if feature_selection or scatter_selection or line_selection:
@@ -84,7 +94,6 @@ def main():
                 elif df is not None:
                     if pygame.K_1<=event.key<=pygame.K_9:
                         index = event.key-pygame.K_1
-                    elif pygame.K_a<=event.key<=pygame.K_z:
                         index=event.key-pygame.K_a + 9
                     else:
                         continue
@@ -125,9 +134,6 @@ def main():
             
     pygame.quit()
     sys.exit()
-
-
-
 
 if __name__ == "__main__":
     main()
