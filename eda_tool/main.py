@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from tkinter import Tk, filedialog
+from tkinter import filedialog
 
 pygame.init()
 WIDTH,HEIGHT=1200,1080
@@ -19,7 +19,6 @@ def draw_text(text,x,y,color=BLACK):
     screen.blit(text_surface,(x,y))
 
 def load_dataset():
-    Tk().withdraw()
     file_path=filedialog.askopenfilename(filetypes=[("CSV files","*.csv")])
     if file_path:
         return pd.read_csv(file_path)
@@ -67,13 +66,13 @@ def main():
         if df is not None:
             if feature_selection or scatter_selection or line_selection:
                 draw_text("Select a column:",50,y_offset)
-                y_offset += 30
+                y_offset+= 30
                 for i,col in enumerate(df.columns):
-                    key_label = str(i + 1) if i < 9 else chr(pygame.K_a + (i - 9))
-                    draw_text(f"{key_label}. {col}", 50, y_offset)
+                    key_label=str(i+1) if i<9 else chr(pygame.K_a+(i-9))
+                    draw_text(f"{key_label}.{col}",50,y_offset)
                     y_offset+=30
                 y_offset+=20
-                draw_text("Press the corresponding key to select a column", 50, y_offset)
+                draw_text("Press the corresponding key to select a column", 50,y_offset)
             else:
                 y_offset+=30
                 draw_text("Press 'H' for Histogram",50,y_offset)
@@ -94,6 +93,7 @@ def main():
                 elif df is not None:
                     if pygame.K_1<=event.key<=pygame.K_9:
                         index = event.key-pygame.K_1
+                    elif pygame.K_a<=event.key<=pygame.K_z:
                         index=event.key-pygame.K_a + 9
                     else:
                         continue
