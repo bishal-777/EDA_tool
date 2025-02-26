@@ -70,8 +70,9 @@ def pairplot(df,feature1,feature2):
 
 running=True
 df=None
-select1=None#analysis select
-select2=None#plot select
+select_analysis=None
+select_plot=None
+select_feature=None
 
 while running==True:
         screen.fill(background)
@@ -81,13 +82,13 @@ while running==True:
         if df is None:
           screen.blit(img_subheadline,(20,80))
 
-        elif select1 is None:
+        elif select_analysis is None:
              img_select=font3.render('Press U for Univariate analysis',True,BLACK)             
              screen.blit(img_select,(20,80))
              img_select=font3.render('Press B for Bivariate analysis',True,BLACK)
              screen.blit(img_select,(20,120))
 
-        elif select1=='uni' and select2==None:
+        elif select_analysis=='uni' and select_plot==None:
              img_select=font3.render('Press H for Histogram',True,BLACK)             
              screen.blit(img_select,(20,80))
              img_select=font3.render('Press B for Boxplot',True,BLACK)
@@ -97,12 +98,25 @@ while running==True:
              img_select=font3.render('Press P for Piechart',True,BLACK)
              screen.blit(img_select,(20,170))  
 
-        elif select1=='bi' and select2==None:
+        elif select_analysis=='bi' and select_plot==None:
              img_select=font3.render('Press S for Scatterplot',True,BLACK)             
              screen.blit(img_select,(20,80))
              img_select=font3.render('Press P for Pairplot',True,BLACK)
              screen.blit(img_select,(20,110))
 
+        elif select_feature==None:
+             img_feature=font3.render('Select the feature by entering designated key',True,BLACK)
+             screen.blit(img_feature,(20,80))
+
+             y=110
+             for i,col in enumerate(df.columns):
+                  if i<9:
+                       key=str(i+1)
+                  else:
+                       key=chr(pygame.K_a+(i-9))    #works by increasing ascii value for differnt characters         
+                  img_col=font3.render(f"{key}.{col}",True,BLACK)
+                  screen.blit(img_col,(20,y))
+                  y+=40
 
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -112,27 +126,27 @@ while running==True:
                  if event.key==pygame.K_l:
                       df=load_dataset()
 
-                 elif df is not None and select1 is None:
+                 elif df is not None and select_analysis is None:
                       if event.key==pygame.K_u:
-                           select1='uni'
+                           select_analysis='uni'
                       if event.key==pygame.K_b:
-                           select1='bi'
+                           select_analysis='bi'
             
-                 elif select1=='uni' and select2==None:
+                 elif select_analysis=='uni' and select_plot==None:
                       if event.key==pygame.K_h:
-                           select2='hist'
+                           select_plot='hist'
                       elif event.key==pygame.K_b:
-                           select2='box'
+                           select_plot='box'
                       elif event.key==pygame.K_c:
-                           select2='count'
+                           select_plot='count'
                       elif event.key==pygame.K_p:
-                           select2='pie'
+                           select_plot='pie'
 
-                 elif select1=='bi' and select2==None:
+                 elif select_analysis=='bi' and select_plot==None:
                       if event.key==pygame.K_s:
-                           select2='scatter'
+                           select_plot='scatter'
                       elif event.key==pygame.K_p:
-                           select2='pair'
+                           select_plot='pair'
 
 
         pygame.display.update()
