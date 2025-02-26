@@ -70,8 +70,8 @@ def pairplot(df,feature1,feature2):
 
 running=True
 df=None
-select1=None
-select2=None
+select1=None#analysis select
+select2=None#plot select
 
 while running==True:
         screen.fill(background)
@@ -117,6 +117,22 @@ while running==True:
                            select1='uni'
                       if event.key==pygame.K_b:
                            select1='bi'
+            
+                 elif select1=='uni' and select2==None:
+                      if event.key==pygame.K_h:
+                           select2='hist'
+                      elif event.key==pygame.K_b:
+                           select2='box'
+                      elif event.key==pygame.K_c:
+                           select2='count'
+                      elif event.key==pygame.K_p:
+                           select2='pie'
+
+                 elif select1=='bi' and select2==None:
+                      if event.key==pygame.K_s:
+                           select2='scatter'
+                      elif event.key==pygame.K_p:
+                           select2='pair'
 
 
         pygame.display.update()
