@@ -1,4 +1,6 @@
 import pygame
+import pandas as pd
+from tkinter import filedialog
 
 pygame.init()
 
@@ -16,18 +18,27 @@ img_subheadline=font2.render('Press L to load dataset',True,BLACK)
 
 background=CYAN
 
+def load_dataset():
+     file_path=filedialog.askopenfilename(filetypes=[('CSV files','*.csv')])
+     if file_path:
+          return pd.read_csv(file_path)
+     return None
+
 running=True
 while running==True:
-    for event in pygame.event.get():
-        if event.type==pygame.QUIT:
-            running=False
+        screen.fill(background)
 
-    screen.fill(background)
+        screen.blit(img_headline,(350,20))
+        screen.blit(img_subheadline,(20,80))
 
-    screen.blit(img_headline,(350,20))
-    screen.blit(img_subheadline,(20,80))
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                running=False
+            elif event.type==pygame.KEYDOWN:
+                 if event.key==pygame.K_l:
+                      df=load_dataset()
 
-    pygame.display.update()
+        pygame.display.update()
 
 
 pygame.quit()
