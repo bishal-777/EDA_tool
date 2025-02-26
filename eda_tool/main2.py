@@ -13,10 +13,14 @@ WHITE=(255,255,255)
 BLACK=(0,0,0)
 CYAN=(0,255,255)
 
+
 font1=pygame.font.SysFont('arial',50,bold=True)
 font2=pygame.font.SysFont('arial',40)
+font3=pygame.font.SysFont('arial',30)
+
 img_headline=font1.render('Welcome to EDA app!',True,BLACK)
 img_subheadline=font2.render('Press L to load dataset',True,BLACK)
+
 
 background=CYAN
 
@@ -38,7 +42,7 @@ def boxplot(df,feature):
      plt.title(f"Boxplot of {feature}")
      plt.show()
 
-def barchart(df,feature):
+def countplot(df,feature):
      plt.figure(figsize=(8,4))
      sns.countplot(x=df[feature])
      plt.title(f"Countplot of {feature}")
@@ -65,18 +69,55 @@ def pairplot(df,feature1,feature2):
 
 
 running=True
+df=None
+select1=None
+select2=None
+
 while running==True:
         screen.fill(background)
 
         screen.blit(img_headline,(350,20))
-        screen.blit(img_subheadline,(20,80))
+
+        if df is None:
+          screen.blit(img_subheadline,(20,80))
+
+        elif select1 is None:
+             img_select=font3.render('Press U for Univariate analysis',True,BLACK)             
+             screen.blit(img_select,(20,80))
+             img_select=font3.render('Press B for Bivariate analysis',True,BLACK)
+             screen.blit(img_select,(20,120))
+
+        elif select1=='uni' and select2==None:
+             img_select=font3.render('Press H for Histogram',True,BLACK)             
+             screen.blit(img_select,(20,80))
+             img_select=font3.render('Press B for Boxplot',True,BLACK)
+             screen.blit(img_select,(20,110))
+             img_select=font3.render('Press C for Countplot',True,BLACK)             
+             screen.blit(img_select,(20,140))
+             img_select=font3.render('Press P for Piechart',True,BLACK)
+             screen.blit(img_select,(20,170))  
+
+        elif select1=='bi' and select2==None:
+             img_select=font3.render('Press S for Scatterplot',True,BLACK)             
+             screen.blit(img_select,(20,80))
+             img_select=font3.render('Press P for Pairplot',True,BLACK)
+             screen.blit(img_select,(20,110))
+
 
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 running=False
+
             elif event.type==pygame.KEYDOWN:
                  if event.key==pygame.K_l:
                       df=load_dataset()
+
+                 elif df is not None and select1 is None:
+                      if event.key==pygame.K_u:
+                           select1='uni'
+                      if event.key==pygame.K_b:
+                           select1='bi'
+
 
         pygame.display.update()
 
