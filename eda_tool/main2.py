@@ -98,13 +98,17 @@ while running==True:
              img_select=font3.render('Press C for Countplot',True,BLACK)             
              screen.blit(img_select,(20,140))
              img_select=font3.render('Press P for Piechart',True,BLACK)
-             screen.blit(img_select,(20,170))  
+             screen.blit(img_select,(20,170)) 
+             img_select = font3.render('Press M to return to Main Menu', True, BLACK)  # Return to main menu option
+             screen.blit(img_select, (20, 200)) 
 
         elif select_analysis=='bi' and select_plot==None:
              img_select=font3.render('Press S for Scatterplot',True,BLACK)             
              screen.blit(img_select,(20,80))
              img_select=font3.render('Press P for lineplot',True,BLACK)
              screen.blit(img_select,(20,110))
+             img_select = font3.render('Press M to return to Main Menu', True, BLACK)  # Return to main menu option
+             screen.blit(img_select, (20, 200))
 
         elif select_feature==None:
              img_feature=font3.render('Select the feature by entering designated key',True,BLACK)
@@ -145,13 +149,17 @@ while running==True:
                            select_plot='count'
                       elif event.key==pygame.K_p:
                            select_plot='pie'
+                      elif event.key == pygame.K_m:
+                           select_analysis = None
 
                  elif select_analysis=='bi' and select_plot==None:
                       if event.key==pygame.K_s:
                            select_plot='scatter'
                       elif event.key==pygame.K_p:
                            select_plot='line'
-###
+                      elif event.key == pygame.K_m:
+                           select_analysis = None
+                           
                  elif select_plot is not None and select_feature is None:
                      index=None
                      if pygame.K_1<=event.key<=pygame.K_9:
