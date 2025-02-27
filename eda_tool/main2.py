@@ -151,47 +151,39 @@ while running==True:
                            select_plot='scatter'
                       elif event.key==pygame.K_p:
                            select_plot='pair'
-
-                 elif select_plot is not None and select_feature==None:
-                      index=None
-                      if event.key>=pygame.K_1 and event.key<=pygame.K_9:
-                           index=event.key-pygame.K_1
-                      elif event.key>=pygame.K_a and event.key<=pygame.K_z:
-                           index=event.key-pygame.K_a+9
-                      
-                      if index is not None and index>=0 and index<len(df.columns):
-                           select_feature=df.columns[index]
-                           if select_analysis=='uni':
-                                if select_plot=='hist':
-                                     histogram(df,select_feature)
-                                elif select_plot=='box':
-                                     boxplot(df,select_feature)
-                                elif select_plot=='count':
-                                     countplot(df,select_feature)
-                                elif select_plot=='pie':
-                                     piechart(df,select_feature)
-                             
-                                select_feature,select_plot=None,None
-
-                           elif select_analysis=='bi':
-                                #select_feature2=None
-                                pass
-
-                      elif select_feature is not None and select_feature2==None:
-                           if event.key>=pygame.K_1 and event.key<=pygame.K_9:
-                              index=event.key-pygame.K_1
-                           elif event.key>=pygame.K_a and event.key<=pygame.K_z:
-                              index=event.key-pygame.K_a+9                           
-
-                           if index is not None and index>=0 and index<len(df.columns):
-                              select_feature2=df.columns[index]
-                              if select_plot=='scatter':
-                                scatterplot(df,select_feature,select_feature2)
-                              elif select_plot=='pair':
-                                pairplot(df,select_feature,select_feature2)
-                            
-                              select_feature,select_feature2,select_plot=None,None,None         
-                    
-
+###
+                 elif select_plot is not None and select_feature is None:
+                     index=None
+                     if pygame.K_1<=event.key<=pygame.K_9:
+                         index=event.key-pygame.K_1
+                     elif pygame.K_a<=event.key<=pygame.K_z:
+                         index=event.key-pygame.K_a+9
+                     if index is not None and 0<=index<len(df.columns):
+                         select_feature=df.columns[index]
+                         if select_analysis=='uni':
+                             if select_plot=='hist':
+                                 histogram(df,select_feature)
+                             elif select_plot=='box':
+                                 boxplot(df,select_feature)
+                             elif select_plot=='count':
+                                 countplot(df,select_feature)
+                             elif select_plot=='pie':
+                                 piechart(df,select_feature)
+                             select_feature,select_plot=None,None
+                         elif select_analysis=='bi':
+                             select_feature2=None
+                 elif select_feature is not None and select_feature2 is None:
+                     index=None
+                     if pygame.K_1<=event.key<=pygame.K_9:
+                         index=event.key-pygame.K_1
+                     elif pygame.K_a<=event.key<=pygame.K_z:
+                         index=event.key-pygame.K_a+9
+                     if index is not None and 0<=index<len(df.columns):
+                         select_feature2=df.columns[index]
+                         if select_plot=='scatter':
+                             scatterplot(df,select_feature,select_feature2)
+                         elif select_plot=='pair':
+                             pairplot(df,select_feature,select_feature2)
+                         select_feature,select_feature2,select_plot=None,None,None
 
 pygame.quit()
