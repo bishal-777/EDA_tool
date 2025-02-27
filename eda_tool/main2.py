@@ -61,10 +61,10 @@ def scatterplot(df,feature1,feature2):
      plt.title(f"Scatterplot of {feature1} and {feature2}")
      plt.show()
 
-def pairplot(df,feature1,feature2):
-     plt.figure(figsize=(20,12))
-     sns.pairplot(data=df,vars=[feature1,feature2])
-     plt.title(f"Pairplot of {feature1} and{feature2}")
+def lineplot(df,feature1,feature2):
+     plt.figure(figsize=(8,4))
+     sns.lineplot(x=df[feature1],y=df[feature2])
+     plt.title(f"Lineplot of {feature1} and{feature2}")
      plt.show()
 
 
@@ -103,7 +103,7 @@ while running==True:
         elif select_analysis=='bi' and select_plot==None:
              img_select=font3.render('Press S for Scatterplot',True,BLACK)             
              screen.blit(img_select,(20,80))
-             img_select=font3.render('Press P for Pairplot',True,BLACK)
+             img_select=font3.render('Press P for lineplot',True,BLACK)
              screen.blit(img_select,(20,110))
 
         elif select_feature==None:
@@ -150,7 +150,7 @@ while running==True:
                       if event.key==pygame.K_s:
                            select_plot='scatter'
                       elif event.key==pygame.K_p:
-                           select_plot='pair'
+                           select_plot='line'
 ###
                  elif select_plot is not None and select_feature is None:
                      index=None
@@ -182,8 +182,8 @@ while running==True:
                          select_feature2=df.columns[index]
                          if select_plot=='scatter':
                              scatterplot(df,select_feature,select_feature2)
-                         elif select_plot=='pair':
-                             pairplot(df,select_feature,select_feature2)
+                         elif select_plot=='line':
+                             lineplot(df,select_feature,select_feature2)
                          select_feature,select_feature2,select_plot=None,None,None
 
 pygame.quit()
